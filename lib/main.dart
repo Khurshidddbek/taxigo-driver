@@ -1,7 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:taxigo_driver/firebase_options.dart';
 import 'package:taxigo_driver/ui/screens/main_screen.dart';
 
-void main() {
+void main() async {
+  // Firebase init
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MainApp());
 }
 
