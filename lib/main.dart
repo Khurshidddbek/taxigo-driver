@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taxigo_driver/domain/states/auth_state.dart';
+import 'package:taxigo_driver/domain/states/profile_state.dart';
 import 'package:taxigo_driver/firebase_options.dart';
 import 'package:taxigo_driver/ui/screens/main_screen.dart';
 import 'package:taxigo_driver/ui/screens/signup_screen.dart';
+import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
 
 void main() async {
   // Firebase init
@@ -21,8 +23,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AuthState(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthState()),
+        ChangeNotifierProvider(create: (_) => ProfileState()),
+      ],
       child: MaterialApp(
         title: 'TAXIGO-DRIVER',
         theme: ThemeData(
@@ -32,6 +37,7 @@ class MainApp extends StatelessWidget {
         routes: {
           SignUpScreen.id: (context) => const SignUpScreen(),
           MainScreen.id: (context) => const MainScreen(),
+          VehicleInfoScreen.id: (context) => const VehicleInfoScreen(),
         },
         builder: (context, child) {
           return MediaQuery(

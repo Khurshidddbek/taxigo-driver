@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:taxigo_driver/ui/screens/main_screen.dart';
-import 'package:taxigo_driver/ui/widgets/progress_dialog.dart';
+import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
+import 'package:taxigo_driver/ui/utils/toast_util.dart';
 
 class AuthState with ChangeNotifier {
   // Variables -----------------------------------------------------------------
@@ -53,23 +53,6 @@ class AuthState with ChangeNotifier {
     return "Please, provide a valid password";
   }
 
-  // Methods (Dialogs)----------------------------------------------------------
-
-  void _showSnackbar(BuildContext context, String? text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Center(child: Text(text ?? "")),
-    ));
-  }
-
-  void _showDialog(BuildContext context, String text) => showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) => ProgressDialog(status: text),
-      );
-
-  void _closeDialog(BuildContext context) =>
-      Navigator.of(context, rootNavigator: true).pop();
-
   // Methods -------------------------------------------------------------------
 
   void signUp(BuildContext context) async {
@@ -78,7 +61,8 @@ class AuthState with ChangeNotifier {
     // check internet connection
     if (!(await hasInternetConnection())) {
       if (context.mounted) {
-        _showSnackbar(context, "Please, check your internet connection");
+        ToastUtil.showSnackbar(
+            context, "Please, check your internet connection");
       }
     }
 
@@ -94,7 +78,7 @@ class AuthState with ChangeNotifier {
   // APIs ----------------------------------------------------------------------
 
   void _apiSignUp(BuildContext context) async {
-    _showDialog(context, "Registering you...");
+    ToastUtil.showProgressDialog(context, "Registering you...");
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -105,19 +89,19 @@ class AuthState with ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
-        _showSnackbar(context, e.message);
+        ToastUtil.showSnackbar(context, e.message);
       }
       return;
     } finally {
       if (context.mounted) {
-        _closeDialog(context);
+        ToastUtil.closeDialog(context);
       }
     }
 
-    // Navigate to main page
+    // Navigate
     if (context.mounted) {
       Navigator.pushNamedAndRemoveUntil(
-          context, MainScreen.id, (route) => false);
+          context, VehicleInfoScreen.id, (route) => false);
     }
   }
 
