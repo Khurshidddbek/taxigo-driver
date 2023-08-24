@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:taxigo_driver/domain/states/auth_state.dart';
+import 'package:taxigo_driver/ui/screens/signin_screen.dart';
 import 'package:taxigo_driver/ui/theme/app_colors.dart';
 import 'package:taxigo_driver/ui/widgets/taxi_button.dart';
 
@@ -53,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               // #textfields
               Form(
-                key: read.formKey,
+                key: read.signUpformKey,
                 child: Column(
                   children: [
                     // #fullname
@@ -120,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               // #button
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pushNamed(context, SignInScreen.id),
                 child: const Text(
                   "Already have a Driver account? Log in",
                   style: TextStyle(

@@ -2,13 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:taxigo_driver/ui/screens/main_screen.dart';
 import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
 import 'package:taxigo_driver/ui/utils/toast_util.dart';
 
 class AuthState with ChangeNotifier {
   // Variables -----------------------------------------------------------------
 
-  final _formKey = GlobalKey<FormState>();
+  final _signUpFormKey = GlobalKey<FormState>();
+  final _signInFormKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -16,7 +18,8 @@ class AuthState with ChangeNotifier {
 
   // Getters -------------------------------------------------------------------
 
-  GlobalKey get formKey => _formKey;
+  GlobalKey get signUpformKey => _signUpFormKey;
+  GlobalKey get signInformKey => _signInFormKey;
   TextEditingController get nameController => _nameController;
   TextEditingController get emailController => _emailController;
   TextEditingController get phoneController => _phoneController;
@@ -56,7 +59,7 @@ class AuthState with ChangeNotifier {
   // Methods -------------------------------------------------------------------
 
   void signUp(BuildContext context) async {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_signUpFormKey.currentState!.validate()) return;
 
     // check internet connection
     if (!(await hasInternetConnection())) {
@@ -68,6 +71,22 @@ class AuthState with ChangeNotifier {
 
     if (context.mounted) {
       _apiSignUp(context);
+    }
+  }
+
+  void signIn(BuildContext context) async {
+    if (!_signInFormKey.currentState!.validate()) return;
+
+    // check internet connection
+    if (!(await hasInternetConnection())) {
+      if (context.mounted) {
+        ToastUtil.showSnackbar(
+            context, "Please, check your internet connection");
+      }
+    }
+
+    if (context.mounted) {
+      _apiSignIn(context);
     }
   }
 
@@ -102,6 +121,35 @@ class AuthState with ChangeNotifier {
     if (context.mounted) {
       Navigator.pushNamedAndRemoveUntil(
           context, VehicleInfoScreen.id, (route) => false);
+    }
+  }
+
+  void _apiSignIn(BuildContext context) async {
+    ToastUtil.showProgressDialog(context, "Sign in...");
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
+
+      if (FirebaseAuth.instance.currentUser == null) {
+        throw FirebaseAuthException(
+            code: 'Sign in failed', message: "Please, try again!");
+      }
+    } on FirebaseAuthException catch (e) {
+      if (context.mounted) {
+        ToastUtil.showSnackbar(context, e.message);
+      }
+      return;
+    } finally {
+      if (context.mounted) {
+        ToastUtil.closeDialog(context);
+      }
+    }
+
+    // Navigate
+    if (context.mounted) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, MainScreen.id, (route) => false);
     }
   }
 

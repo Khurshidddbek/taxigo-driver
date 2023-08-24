@@ -5,6 +5,7 @@ import 'package:taxigo_driver/domain/states/auth_state.dart';
 import 'package:taxigo_driver/domain/states/profile_state.dart';
 import 'package:taxigo_driver/firebase_options.dart';
 import 'package:taxigo_driver/ui/screens/main_screen.dart';
+import 'package:taxigo_driver/ui/screens/signin_screen.dart';
 import 'package:taxigo_driver/ui/screens/signup_screen.dart';
 import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
 
@@ -36,6 +37,7 @@ class MainApp extends StatelessWidget {
         initialRoute: SignUpScreen.id,
         routes: {
           SignUpScreen.id: (context) => const SignUpScreen(),
+          SignInScreen.id: (context) => const SignInScreen(),
           MainScreen.id: (context) => const MainScreen(),
           VehicleInfoScreen.id: (context) => const VehicleInfoScreen(),
         },

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:taxigo_driver/domain/states/profile_state.dart';
+import 'package:taxigo_driver/domain/states/auth_state.dart';
 import 'package:taxigo_driver/ui/theme/app_colors.dart';
 import 'package:taxigo_driver/ui/widgets/taxi_button.dart';
 
-class VehicleInfoScreen extends StatefulWidget {
-  static const String id = "vehicleinfo";
+class SignInScreen extends StatefulWidget {
+  static const String id = "signin";
 
-  const VehicleInfoScreen({super.key});
+  const SignInScreen({super.key});
 
   @override
-  State<VehicleInfoScreen> createState() => _VehicleInfoScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _VehicleInfoScreenState extends State<VehicleInfoScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
-    final read = context.read<ProfileState>();
+    final read = context.read<AuthState>();
 
     return Scaffold(
       body: SafeArea(
@@ -41,7 +41,7 @@ class _VehicleInfoScreenState extends State<VehicleInfoScreen> {
 
               // #title
               const Text(
-                "Enter vehicle details",
+                "Sign in as Driver",
                 style: TextStyle(
                   fontSize: 30,
                   fontFamily: "Brand-Bold",
@@ -53,41 +53,30 @@ class _VehicleInfoScreenState extends State<VehicleInfoScreen> {
 
               // #textfields
               Form(
-                key: read.formKey,
+                key: read.signInformKey,
                 child: Column(
                   children: [
-                    // #model
+                    // #email
                     TextFormField(
-                      controller: read.modelController,
+                      controller: read.emailController,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
-                        labelText: "Car model",
+                        labelText: "Email address",
                       ),
                       textInputAction: TextInputAction.next,
-                      validator: read.simpleValidator,
+                      validator: read.validateEmail,
                     ),
 
                     const SizedBox(height: 10),
 
-                    // #color
+                    // #password
                     TextFormField(
-                      controller: read.colorController,
+                      controller: read.passwordController,
+                      obscureText: true,
                       decoration: const InputDecoration(
-                        labelText: "Car color",
+                        labelText: "Password",
                       ),
-                      textInputAction: TextInputAction.next,
-                      validator: read.simpleValidator,
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    // #number
-                    TextFormField(
-                      controller: read.carNumberController,
-                      decoration: const InputDecoration(
-                        labelText: "Vehicle number",
-                      ),
-                      textInputAction: TextInputAction.next,
-                      validator: read.simpleValidator,
+                      validator: read.validatePassword,
                     ),
                   ],
                 ),
@@ -97,10 +86,26 @@ class _VehicleInfoScreenState extends State<VehicleInfoScreen> {
 
               // #button
               TaxiButton(
-                title: "PROCEED",
-                color: AppColors.green,
-                onPressed: () => read.updateVehicleInfo(context),
+                title: "LOGIN",
+                color: AppColors.accentPurple,
+                onPressed: () => read.signIn(context),
               ),
+
+              const SizedBox(height: 25),
+
+              // #button
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  "Don't have an account? Sign up here",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 25),
             ],
           ),
         ),
