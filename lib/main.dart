@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isUserLoggedIn = FirebaseAuth.instance.currentUser != null;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthState()),
@@ -34,7 +37,7 @@ class MainApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: "Brand-Regular",
         ),
-        initialRoute: SignUpScreen.id,
+        initialRoute: isUserLoggedIn ? MainScreen.id : SignUpScreen.id,
         routes: {
           SignUpScreen.id: (context) => const SignUpScreen(),
           SignInScreen.id: (context) => const SignInScreen(),
