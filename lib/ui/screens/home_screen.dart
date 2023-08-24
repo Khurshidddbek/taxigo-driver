@@ -2,10 +2,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:taxigo_driver/ui/widgets/taxi_button.dart';
 
-class MainScreen extends StatelessWidget {
-  static const String id = "main";
+class HomeScreen extends StatelessWidget {
+  static const String id = "home";
 
-  const MainScreen({super.key});
+  const HomeScreen({super.key});
 
   void _testConnection() async {
     // Create a new record in the database

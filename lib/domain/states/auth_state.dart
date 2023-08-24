@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:taxigo_driver/ui/screens/main_screen.dart';
+import 'package:taxigo_driver/ui/screens/home_screen.dart';
 import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
 import 'package:taxigo_driver/ui/utils/toast_util.dart';
 
@@ -149,7 +149,7 @@ class AuthState with ChangeNotifier {
     // Navigate
     if (context.mounted) {
       Navigator.pushNamedAndRemoveUntil(
-          context, MainScreen.id, (route) => false);
+          context, HomeScreen.id, (route) => false);
     }
   }
 
