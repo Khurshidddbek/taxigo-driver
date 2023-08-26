@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:taxigo_driver/domain/states/auth_state.dart';
+import 'package:taxigo_driver/main.dart';
 import 'package:taxigo_driver/ui/theme/app_colors.dart';
 import 'package:taxigo_driver/ui/widgets/taxi_button.dart';
 
 class SignInScreen extends StatefulWidget {
-  static const String id = "signin";
-
   const SignInScreen({super.key});
 
   @override
@@ -60,6 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     TextFormField(
                       controller: read.emailController,
                       keyboardType: TextInputType.emailAddress,
+                      onTapOutside: (_) => FocusScope.of(context).unfocus(),
                       decoration: const InputDecoration(
                         labelText: "Email address",
                       ),
@@ -95,7 +95,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
               // #button
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => routemaster.pop(),
                 child: const Text(
                   "Don't have an account? Sign up here",
                   style: TextStyle(

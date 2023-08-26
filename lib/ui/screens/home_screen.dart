@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:taxigo_driver/ui/widgets/taxi_button.dart';
 
 class HomeScreen extends StatelessWidget {
-  static const String id = "home";
-
   const HomeScreen({super.key});
 
   void _testConnection() async {

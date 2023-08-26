@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:taxigo_driver/ui/screens/home_screen.dart';
+import 'package:taxigo_driver/main.dart';
+import 'package:taxigo_driver/ui/navigation/app_routes.dart';
 import 'package:taxigo_driver/ui/utils/toast_util.dart';
 
 class ProfileState with ChangeNotifier {
@@ -41,7 +42,7 @@ class ProfileState with ChangeNotifier {
     }
 
     // Navigate
-    Navigator.pushNamedAndRemoveUntil(context, HomeScreen.id, (route) => false);
+    routemaster.push(AppRoutes.home);
   }
 
   // APIs ----------------------------------------------------------------------

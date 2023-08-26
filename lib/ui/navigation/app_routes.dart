@@ -10,7 +10,7 @@ import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
 
 class AppRoutes {
   static const signUp = '/sign-up';
-  static const signIn = '/sign-in';
+  static const signIn = '$signUp/sign-in';
 
   static const vehicleInfo = '/vehicle-info';
   static const home = '/home';

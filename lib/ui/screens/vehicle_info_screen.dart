@@ -6,8 +6,6 @@ import 'package:taxigo_driver/ui/theme/app_colors.dart';
 import 'package:taxigo_driver/ui/widgets/taxi_button.dart';
 
 class VehicleInfoScreen extends StatefulWidget {
-  static const String id = "vehicleinfo";
-
   const VehicleInfoScreen({super.key});
 
   @override

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:taxigo_driver/ui/navigation/routes.dart';
+import 'package:taxigo_driver/ui/navigation/app_routes.dart';
 
 class AppState extends ChangeNotifier {
   late bool _isLoggedIn;
@@ -18,9 +18,9 @@ class AppState extends ChangeNotifier {
 
   // Methods -------------------------------------------------------------------
 
-  void onChangeRoute({RouteMap? route}) {
-    _currentRoute =
-        route ?? (_isLoggedIn ? AppRoutes.loggedInMap : AppRoutes.loggedOutMap);
+  void onChangeRoute({RouteMap? routeMap}) {
+    _currentRoute = routeMap ??
+        (_isLoggedIn ? AppRoutes.loggedInMap : AppRoutes.loggedOutMap);
     notifyListeners();
   }
 }

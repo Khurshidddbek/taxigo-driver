@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:taxigo_driver/domain/states/auth_state.dart';
-import 'package:taxigo_driver/ui/screens/signin_screen.dart';
+import 'package:taxigo_driver/main.dart';
+import 'package:taxigo_driver/ui/navigation/app_routes.dart';
 import 'package:taxigo_driver/ui/theme/app_colors.dart';
 import 'package:taxigo_driver/ui/widgets/taxi_button.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const String id = "signup";
-
   const SignUpScreen({super.key});
 
   @override
@@ -60,6 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     // #fullname
                     TextFormField(
                       controller: read.nameController,
+                      onTapOutside: (_) => FocusScope.of(context).unfocus(),
                       decoration: const InputDecoration(
                         labelText: "Fullname",
                       ),
@@ -121,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               // #button
               TextButton(
-                onPressed: () => Navigator.pushNamed(context, SignInScreen.id),
+                onPressed: () => routemaster.push(AppRoutes.signIn),
                 child: const Text(
                   "Already have a Driver account? Log in",
                   style: TextStyle(

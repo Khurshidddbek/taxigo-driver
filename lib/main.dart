@@ -5,6 +5,7 @@ import 'package:routemaster/routemaster.dart';
 import 'package:taxigo_driver/domain/states/app_state.dart';
 import 'package:taxigo_driver/firebase_options.dart';
 import 'package:taxigo_driver/ui/navigation/route_observer.dart';
+import 'package:taxigo_driver/ui/theme/app_theme.dart';
 
 final routemaster = RoutemasterDelegate(
   observers: [MyRouteObserver()],
@@ -35,7 +36,7 @@ class MainApp extends StatelessWidget {
         routerDelegate: routemaster,
         routeInformationParser: const RoutemasterParser(),
         title: 'TAXIGO-DRIVER',
-        theme: ThemeData(fontFamily: "Brand-Regular"),
+        theme: AppTheme.themeData,
         builder: (context, child) {
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

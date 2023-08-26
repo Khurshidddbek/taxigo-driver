@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
+import 'package:taxigo_driver/domain/states/app_state.dart';
+import 'package:taxigo_driver/main.dart';
+import 'package:taxigo_driver/ui/navigation/app_routes.dart';
 import 'package:taxigo_driver/ui/screens/home_screen.dart';
 import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
 import 'package:taxigo_driver/ui/utils/toast_util.dart';
@@ -119,8 +123,8 @@ class AuthState with ChangeNotifier {
 
     // Navigate
     if (context.mounted) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, VehicleInfoScreen.id, (route) => false);
+      context.read<AppState>().onChangeRoute(routeMap: AppRoutes.loggedInMap);
+      routemaster.push(AppRoutes.vehicleInfo);
     }
   }
 
@@ -148,8 +152,7 @@ class AuthState with ChangeNotifier {
 
     // Navigate
     if (context.mounted) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.id, (route) => false);
+      context.read<AppState>().onChangeRoute(routeMap: AppRoutes.loggedInMap);
     }
   }
 
