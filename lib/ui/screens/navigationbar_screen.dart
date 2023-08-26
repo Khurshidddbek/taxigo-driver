@@ -39,7 +39,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: _screens[_index]),
+      body: _screens[_index],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: (int i) => setState(() => _index = i),
