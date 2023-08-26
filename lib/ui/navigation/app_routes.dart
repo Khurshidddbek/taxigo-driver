@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart' as routemaster;
 import 'package:taxigo_driver/domain/states/auth_state.dart';
+import 'package:taxigo_driver/domain/states/mapkit_state.dart';
 import 'package:taxigo_driver/domain/states/profile_state.dart';
 import 'package:taxigo_driver/ui/navigation/page_transition.dart';
 import 'package:taxigo_driver/ui/screens/account_screen.dart';
@@ -50,22 +51,19 @@ class AppRoutes {
               child: const VehicleInfoScreen(),
             ),
           ),
-      navigationBar: (_) => const routemaster.TabPage(
-            paths: [home, earnings, ratings, account],
-            child: NavigationBarScreen(),
+      navigationBar: (_) => routemaster.TabPage(
+            paths: const [home, earnings, ratings, account],
+            child: MultiProvider(
+              providers: [
+                ChangeNotifierProvider(create: (context) => MapkitState()),
+              ],
+              child: const NavigationBarScreen(),
+            ),
           ),
-      home: (_) => const TransitionPage(
-            child: HomeScreen(),
-          ),
-      earnings: (_) => const TransitionPage(
-            child: EarningsScreen(),
-          ),
-      ratings: (_) => const TransitionPage(
-            child: RatingsScreen(),
-          ),
-      account: (_) => const TransitionPage(
-            child: AccountScreen(),
-          ),
+      home: (_) => const TransitionPage(child: HomeScreen()),
+      earnings: (_) => const TransitionPage(child: EarningsScreen()),
+      ratings: (_) => const TransitionPage(child: RatingsScreen()),
+      account: (_) => const TransitionPage(child: AccountScreen()),
     },
   );
 }
