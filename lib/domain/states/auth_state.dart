@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:taxigo_driver/domain/states/app_state.dart';
 import 'package:taxigo_driver/main.dart';
 import 'package:taxigo_driver/ui/navigation/app_routes.dart';
-import 'package:taxigo_driver/ui/screens/home_screen.dart';
-import 'package:taxigo_driver/ui/screens/vehicle_info_screen.dart';
 import 'package:taxigo_driver/ui/utils/toast_util.dart';
 
 class AuthState with ChangeNotifier {
