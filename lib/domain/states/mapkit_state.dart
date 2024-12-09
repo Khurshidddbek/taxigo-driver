@@ -20,11 +20,8 @@ class MapkitState extends ChangeNotifier {
 
   Future<void> init() async {
     isLocationLoading = true;
-    // #testing
-    await Future.delayed(const Duration(seconds: 3));
-
     await _initPermission();
-    await _fetchCurrentLocation();
+    _currentLocation = await fetchCurrentLocation();
     await _moveCamerTo(_currentLocation!);
     await _addCurrentLocationToMap(beforeDelay: 2);
     isLocationLoading = false;
@@ -36,6 +33,7 @@ class MapkitState extends ChangeNotifier {
       _mapControllerCompleter;
   List<MapObject> get mapObjects => _mapObjects;
   bool get isLocationLoading => _isLocationLoading;
+  Location? get currentLocation => _currentLocation;
 
   // Setters -------------------------------------------------------------------
 
@@ -76,17 +74,16 @@ class MapkitState extends ChangeNotifier {
 
   // Location methods ----------------------------------------------------------
 
-  Future<void> _fetchCurrentLocation() async {
+  Future<Location> fetchCurrentLocation() async {
     isLocationLoading = true;
 
     _currentLocation = await Geolocator.getCurrentPosition().then((value) {
       return Location(latitude: value.latitude, longitude: value.longitude);
     }).catchError((e) {
       debugPrint("Error: getCurrentLocation().getCurrentLocation(): $e");
-      return _defaultLocation;
     });
-
     isLocationLoading = false;
+    return _defaultLocation;
   }
 
   Future<void> _moveCamerTo(Location location) async {

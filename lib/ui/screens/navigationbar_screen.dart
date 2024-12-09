@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taxigo_driver/ui/screens/account_screen.dart';
@@ -46,8 +44,8 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
         destinations: [
           for (int i = 0; i < _screens.length; i++)
             NavigationDestination(
-              icon:
-                  !Platform.isAndroid ? _materialIcons[i] : _cupertinoIcons[i],
+              icon: _cupertinoIcons[i],
+              selectedIcon: _materialIcons[i],
               label: _titles[i],
             ),
         ],

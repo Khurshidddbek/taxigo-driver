@@ -1,6 +1,9 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '13.0'
 
+# flutter_geofire package
+pod 'GeoFire', :git => 'https://github.com/mrdishant/geofire-objc'
+
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
@@ -37,8 +40,17 @@ target 'Runner' do
   end
 end
 
+pod 'Firebase', :modular_headers => true
+pod 'FirebaseCoreInternal', :modular_headers => true
+pod 'GoogleUtilities', :modular_headers => true
+pod 'FirebaseCore', :modular_headers => true
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
+    if target.name == 'firebase_core.FLTFirebasePlugin'
+      target.build_configurations.each do |configuration|
+        configuration.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+      end
+    end
   end
 end

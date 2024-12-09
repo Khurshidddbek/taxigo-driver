@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart' as routemaster;
 import 'package:taxigo_driver/domain/states/auth_state.dart';
+import 'package:taxigo_driver/domain/states/home_state.dart';
 import 'package:taxigo_driver/domain/states/mapkit_state.dart';
 import 'package:taxigo_driver/domain/states/profile_state.dart';
 import 'package:taxigo_driver/ui/navigation/page_transition.dart';
@@ -56,6 +57,7 @@ class AppRoutes {
             child: MultiProvider(
               providers: [
                 ChangeNotifierProvider(create: (context) => MapkitState()),
+                ChangeNotifierProvider(create: (context) => HomeState(context)),
               ],
               child: const NavigationBarScreen(),
             ),
